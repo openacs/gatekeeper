@@ -205,7 +205,7 @@ ad_proc -private gatekeeper_read_fully {fd timeout length} {
 ad_proc -private gatekeeper_query_foreign {url {timeout 30}} {
     Query a foreign url.
 } {
-    ns_log "Notice" "Requesting foreign url: $url"
+    ns_log debug "Requesting foreign url: $url"
     set input_headers [ad_conn headers]
 
     set headers [ns_set copy $input_headers]
@@ -322,7 +322,7 @@ ad_proc -public gatekeeper_serve_request { } {
 
     if { [catch { gatekeeper_query_foreign [gatekeeper_request_url_to_foreign_url $url]}] } {
 	global errorInfo
-	ns_log "Error" "Error fetching $url:\n$errorInfo"
+	ns_log Error "gatekeeper_serve_request: error fetching $url:\n$errorInfo"
 	ad_return_error "Unable to retreive page." "Unable to retreive page."
     }
 }
