@@ -160,7 +160,7 @@ ad_proc -private gatekeeper_munge_cookies {cookie} {
         }
     }
     set extra_cookies [ad_parameter -package_id [ad_conn package_id] "ExtraCookie"]
-    if { ![empty_string_p extra_cookies] } {
+    if { ![empty_string_p $extra_cookies] } {
         lappend return_cookies $extra_cookies
     }
     #ns_log Notice "Sending cookies: $return_cookies"
