@@ -1,0 +1,4 @@
+ad_require_permission [ad_conn package_id] "read"
+
+gatekeeper_serve_request 
+

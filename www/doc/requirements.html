@@ -1,0 +1,163 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+  <head>
+    <title>Gatekeeper Package Requirements</title>
+  </head>
+
+  <body bgcolor="#ffffff">
+    <h1>Gatekeeper Package Requirements</h1>
+    by <a href="mailto:jbank@arsdigita.com">Joseph Bank</a>
+    <hr>
+
+    <i>This is a DRAFT</i>
+
+    <h3>I. Introduction</h3>
+
+    <p> The Gatekeeper module is intended to allow an ACS installation to act
+    as a simple gate keeper for another web site.  This is particularly useful
+    for dealing with "mounting" another legacy website on our own site, while
+    adding a security layer.  We can then only allow access to the legacy website
+    from the main ACS server.  
+
+    <h3>II. Vision Statement</h3>
+
+    <p>
+    </p>
+
+    <h3>III. System/Application Overview</h3>
+    
+    <p>
+    The ACS gatekeeper package provides an application for managing seamless
+    remote viewing of other web pages with optional security layers.
+    </p>
+
+    <p>
+    The package consists of the following components:
+    </p>
+
+    <ul>
+    <li>A web interface for retrieving foreign urls.
+    <li>An API for adding security restrictions.
+    </ul>
+
+    <h3>IV. Use-cases and User Scenarios</h3>
+
+    <p> 
+    <ul>
+    <li> Jane Webmaster wants to build an ACS site that provides paid
+    access to a currently existing web site.  This other site uses
+    significantly different technology, so full integration would
+    require a great deal of effort.  Instead, Jane creates an instance
+    of the gatekeeper package which points to the existing site. She
+    sets up a security restriction for the gatekeeper instance using
+    ACS permissions by only allowing read access for a newly created
+    user group.  She then modifies the ACS Ecommerce system to insert
+    and remove users from the new user group based on their
+    subscription payments.  Finally, she modifies the existing site to
+    only serve requests from her ACS server's IP address.
+    </ul>
+
+    <h3>V. Related Links</h3>
+
+    Lots of other web sites do related things.  For example, anonymizer sites allow
+    you to surf the web while doing seamless translation of the page.
+    <ul>
+      <li><a href="http://www.anonymizer.com">Anonymizer Site</a>
+    </ul>
+
+
+    <h3>VI.A Requirements</h3>
+
+    <p><strong>10.0 Seamless Viewing</strong>
+    </p>
+    <p>
+    The gatekeeper should provide seamless viewing of url's.  This means
+    that the URL's should look like they belong to the ACS site, not the
+    original site.
+    </p>
+
+    <p><strong>20.0 Restricted Browsing</strong>
+    </p>
+    <p>
+    A given instance of the gatekeeper package should only provide access
+    to a single site.  The user must not be able to modify the URL so that
+    arbitrary sites can be retrieved through the server.
+    </p>
+
+    <p><strong>30.0 Link Translation</strong>
+    </p>
+    <p>
+    All links from the gatekeeper page to the given site should be
+    translated to use the gatekeeper.
+    </p>
+
+    <p><strong>40.0 User Tracking</strong>
+    </p>
+    <p>
+    The ability to track all pages viewed via the gatekeeper should exist.
+    </p>
+
+    <p><strong>50.0 Flexible Restrictions</strong>
+    </p>
+    <blockquote>
+    <p><strong>50.1 ACS Permissions</strong>
+    </p>
+    <p>
+    The gatekeeper package should support standard ACS permissioning.  Access can thus
+    be limited by setting up limited read access to an instance of the gatekeeper package.
+    </p>
+    <p><strong>50.2 Callbacks </strong>
+    </p>
+    <p>
+    The gatekeepers should be provide access control via registered callbacks.
+    </p>
+    </blockquote>
+
+    <p><strong>60.0 Full HTTP Support</strong>
+    </p>
+    <p>
+    The gatekeeper should support the entire HTTP specification.
+    <blockquote>
+        <p><strong>60.1 POST Support</strong>
+        </p>
+        <p>
+        POST form submission must be supported.
+        </p>
+        <p><strong>60.2 Non-HTML Pages</strong>
+        </p>
+        <p>
+        Retrieval of non-HTML pages, such as GIFs and JPEGs, must be supported.
+        </p>
+        <p><strong>60.3 Cookie Support</strong>
+        </p>
+        <p>
+        The system should have the ability to store and respond with cookies sent
+        from the guarded site.
+        </p>
+    </blockquote>
+    </p>
+
+
+    <h3>VII. Revision History</h3>
+    
+<table cellpadding=2 cellspacing=2 width=90% bgcolor=#efefef>
+<tr bgcolor=#e0e0e0>
+    <th width=10%>Document Revision #</th>
+    <th width=50%>Action Taken, Notes</th>
+    <th>When?</th>
+    <th>By Whom?</th>
+</tr>
+
+<tr>
+   <td>0.1</td>
+   <td>Creation</td>
+   <td>11/23/2000</td>
+   <td>Joseph Bank</td>
+</tr>
+</table>
+
+    <hr>
+    <address><a href="mailto:jbank@arsdigita.com"></a></address>
+Last modified: $Id$
+  </body>
+</html>
