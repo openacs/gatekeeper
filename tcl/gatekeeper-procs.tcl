@@ -308,7 +308,7 @@ ad_proc -public gatekeeper_serve_request { } {
     The main entry point for the gatekeeper codes.
     Serve a foreign request with security access control and url remapping.
 } {
-    set user_id [ad_verify_and_get_user_id]
+    set user_id [ad_conn user_id]
     set url "/[ad_conn extra_url]"
     if { ![empty_string_p [ad_conn query]] } {
         append url "?[ad_conn query]"
