@@ -12,9 +12,10 @@
         <database>postgresql</database>
     </database-support>
         <owner url="mailto:jbank@arsdigita.com">Joseph Bank</owner>
-        <summary>Provides ability to retrieve remote URL's in a controlled way.</summary>
+        <summary>Provides ability to retrieve remote URLs in a controlled way.</summary>
         <release-date>2001-01-19</release-date>
         <vendor url="http://www.arsdigita.com/">ArsDigita Corporation</vendor>
+        <description format="text/html">Gatekeeper can act as a proxy for requests, passing a request on to another server via an http GET or POST and returning the resulting document via the existing connection</description>
 
         <requires url="acs-kernel" version="4.6.2"/>
 
