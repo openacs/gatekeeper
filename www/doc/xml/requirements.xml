@@ -163,6 +163,36 @@ PHPWiki can use many different types of authentication: LDAP, IMAP,
 PASSWD, DB,...
         </programlisting>
       </listitem>
+      <listitem>
+        <programlisting>
+--------------------------------------------
+Other Use-Case:
+--------------------------------------------
+Integration of an external website protected by http basic authencation (via the .htaccess file from Apache)
+
+Set up a gatekeeper instance that points to the URL that should be
+password-protected if not accessed from OpenACS or .LRN.
+
+Then edit the .htaccess file in question. It should read something like this:
+        <programlisting>
+AuthUserFile /home/www/dirkgomez/.htpasswd
+AuthGroupFile /dev/null
+AuthName "Dirk Gomez' downright secret stuff"
+AuthAuthoritative  On
+AuthType Basic
+Satisfy Any
+
+&lt;Limit GET POST&gt;
+order deny,allow
+deny from all
+#allow from foobar.dirkgomez.de
+allow from 123.123.123.123
+require user dirk ramiro
+&lt;/Limit&gt;
+        </programlisting>
+
+        </programlisting>
+      </listitem>
     </itemizedlist>
   </sect2>
   <sect2 id="gatekeeper-related-items">
