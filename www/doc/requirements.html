@@ -1,163 +1,152 @@
-<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
-<html>
-  <head>
-    <title>Gatekeeper Package Requirements</title>
-  </head>
-
-  <body bgcolor="#ffffff">
-    <h1>Gatekeeper Package Requirements</h1>
-    by <a href="mailto:jbank@arsdigita.com">Joseph Bank</a>
-    <hr>
-
-    <i>This is a DRAFT</i>
-
-    <h3>I. Introduction</h3>
-
-    <p> The Gatekeeper module is intended to allow an ACS installation to act
-    as a simple gate keeper for another web site.  This is particularly useful
-    for dealing with "mounting" another legacy website on our own site, while
-    adding a security layer.  We can then only allow access to the legacy website
-    from the main ACS server.  
-
-    <h3>II. Vision Statement</h3>
-
-    <p>
-    </p>
-
-    <h3>III. System/Application Overview</h3>
-    
-    <p>
-    The ACS gatekeeper package provides an application for managing seamless
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Requirements</title><meta name="generator" content="DocBook XSL Stylesheets V1.62.4"><link rel="home" href="index.html" title="Gatekeeper"><link rel="up" href="index.html" title="Gatekeeper"><link rel="previous" href="gatekeeper-install.html" title="Installation"><link rel="stylesheet" href="openacs.css" type="text/css"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><a href="http://openacs.org"><img src="/doc/images/alex.jpg" border="0"></a><table width="100%" summary="Navigation header" border="0"><tr><td width="20%" align="left"><a accesskey="p" href="gatekeeper-install.html">Prev</a> </td><th width="60%" align="center"></th><td width="20%" align="right"> </td></tr></table><hr></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="requirements"></a>Requirements</h2></div></div><div></div></div><div class="authorblurb"><p><p>by <a href="mailto:jbank@arsdigita.com" target="_top">Joseph Bank</a>, 
+    <a href="mailto:joel@aufrecht.org" target="_top">Joel Aufrecht</a></p><br>
+          OpenACS docs are written by the named authors, and may be edited
+          by OpenACS documentation staff.
+        </p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="gatekeeper-requirements-introduction"></a>Introduction</h3></div></div><div></div></div><p> Gatekeeper allows an OpenACS installation to provide users
+    authenticated access to other web sites.  This is particularly
+    useful for dealing with "mounting" another legacy website on our
+    own site, while adding a security layer.  We can then only allow
+    access to the legacy website from the main ACS server.  </p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="gatekeeper-overview"></a>System/Application Overview</h3></div></div><div></div></div><p>Gatekeeper provides an application for managing seamless
     remote viewing of other web pages with optional security layers.
-    </p>
+    It consists of the following components:
+    </p><div class="itemizedlist"><ul type="disc"><li><p>A web interface for retrieving foreign urls.</p></li><li><p>An API for adding security restrictions.</p></li></ul></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="gatekeeper-use-cases"></a>Use-cases and User Scenarios</h3></div></div><div></div></div><div class="itemizedlist"><ul type="disc"><li><p> Jane Webmaster wants to build an ACS site that provides paid
+      access to a currently existing web site.  This other site uses
+      significantly different technology, so full integration would
+      require a great deal of effort.  </p><div class="orderedlist"><ol type="1"><li><p>Jane creates an instance of the gatekeeper package which points to the existing site.</p></li><li><p>She sets up a security restriction for the gatekeeper instance using
+            ACS permissions by only allowing read access for a newly created
+            user group.</p></li><li><p>She modifies the ACS Ecommerce system to insert and remove users from the new user group based on their subscription payments.</p></li><li><p>She modifies the existing site to only serve requests from her ACS server's IP address.</p></li></ol></div></li><li><pre class="programlisting">
+--------------------------------------------
+Use case
+--------------------------------------------
 
-    <p>
-    The package consists of the following components:
-    </p>
+Integration of an external web mail client: Squirrelmail (PHP-based) and
+IMAP-Server.
 
-    <ul>
-    <li>A web interface for retrieving foreign urls.
-    <li>An API for adding security restrictions.
-    </ul>
+Administrator
+--------------------------------------------
+The institution has to have an IMAP server up and running. OpenACS must
+be installed using the external authentication via pam-imap/ldap/passwd
+(etc.) to authenticate and synchronize openacs users.
 
-    <h3>IV. Use-cases and User Scenarios</h3>
+The administrator has to have a webmail client like IMP or Squirrelmail
+installed on Apache+PHP. The AOLServer has to have access to Apache for
+instance over localhost.
 
-    <p> 
-    <ul>
-    <li> Jane Webmaster wants to build an ACS site that provides paid
-    access to a currently existing web site.  This other site uses
-    significantly different technology, so full integration would
-    require a great deal of effort.  Instead, Jane creates an instance
-    of the gatekeeper package which points to the existing site. She
-    sets up a security restriction for the gatekeeper instance using
-    ACS permissions by only allowing read access for a newly created
-    user group.  She then modifies the ACS Ecommerce system to insert
-    and remove users from the new user group based on their
-    subscription payments.  Finally, she modifies the existing site to
-    only serve requests from her ACS server's IP address.
-    </ul>
+The administrator has sucessfully installed the external authentication
+package using pam.
 
-    <h3>V. Related Links</h3>
+The administrator has to do the following to integrate the external
+webmail client squirrelmail using the gatekeeper.
 
-    Lots of other web sites do related things.  For example, anonymizer sites allow
-    you to surf the web while doing seamless translation of the page.
-    <ul>
-      <li><a href="http://www.anonymizer.com">Anonymizer Site</a>
-    </ul>
+1. Create a new Gatekeeper Instance: Name: Squirrelmail
+2. Indicate the required parameters for the gatekeeper instance:
+- URL to guard:
+http://localhost/squirrel/
+- Gatekeeper Type:
+
+requires external authentication
+- Path to an optional header/footer template
+/www/service0/packages/dotlrn/dotlrn-master.adp
+- Name of the authority used (local, pam, ldap...) or database table
+with account informations:
+pam
+- used login form input field:
+login_username
+- used password form input field:
+secretkey
+- logout/sign-out path:
+http:/localhost/squirrel/src/signout.php
+- request method:
+post
+- form action:
+http:/localhost/squirrel/redirect.php
+- where to add the startpage of the webmail in openacs:
+/dotlrn/?&amp;page-num=3
+
+The timeout of squirrelmail has to be set to a higher value than that of
+OpenACS to make sure that the webmail session is valid as long as the
+OpenACS session is valid.
 
 
-    <h3>VI.A Requirements</h3>
+Gatekeeper
+--------------------------------------------
+The Gatekeeper Instance registers itself for auto logon on to that
+authority. Thus after a sucessful login the login information is also
+used to login to the webmail client and the cookies are forwarded to the
+users browser. Thus the authentication package has to be extended for
+post-login and logout procedure-calls. On request the gatekeeper checks
+the content type (html, xhtml, compressed or not, usage of frames or
+not) and rewrites the links apropriately. As soon as the user logs out
+the webmail client is also logged out.
 
-    <p><strong>10.0 Seamless Viewing</strong>
-    </p>
-    <p>
-    The gatekeeper should provide seamless viewing of url's.  This means
-    that the URL's should look like they belong to the ACS site, not the
-    original site.
-    </p>
+User
+--------------------------------------------
+The user simply logs into the system once and is served a link where he
+can access the webmail-client. In this case over My Space--&gt;My Mails as
+Page three under dotLRN. The documentation of the webmail client has to
 
-    <p><strong>20.0 Restricted Browsing</strong>
-    </p>
-    <p>
-    A given instance of the gatekeeper package should only provide access
+be made accessible to the user.
+
+The current Gatekeeper has to be improved by the following:
+- allow usage of templates (done already)
+- allow xml, xhtml
+- allow compressed data
+- auto-check of frames --&gt; if frames are used then the template is
+useless or the frame has to be embedded inside another frameset.
+- cookies forwarding for external application (not sure if that already
+exists)
+
+Restrictions
+--------------------------------------------
+- Different locale between OpenACS and Webmail
+- Different designs (depending on the webmail client this can be changed
+via templates).
+- no true integration into MySpace possible to notify user that she/he
+has new unread emails.
+</pre></li><li><pre class="programlisting">
+--------------------------------------------
+Other Use-Case:
+--------------------------------------------
+Integration of PHPWiki (xhtml) via Gatekeeper and LDAP/PAM/SQL...
+
+Username Inputfield: auth[userid]
+Password Inputfield: auth[passwd]
+Form action:    HomePage?action=browse
+For OpenACS-Authority: PAM
+PHPWiki can use many different types of authentication: LDAP, IMAP,
+PASSWD, DB,...
+        </pre></li></ul></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="gatekeeper-related-items"></a>Related Links</h3></div></div><div></div></div><p>Lots of other web sites do related things.  For example, anonymizer sites allow
+    you to surf the web while doing seamless translation of the page.</p><div class="itemizedlist"><ul type="disc"><li><p><a href="http://www.anonymizer.com" target="_top">Anonymizer Site</a></p></li></ul></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="gatekeeper-functional-requirements"></a>Functional Requirements</h3></div></div><div></div></div><div class="informaltable"><table cellspacing="0" border="1"><colgroup><col><col><col><col></colgroup><thead><tr><th><span class="strong">Req #</span></th><th><span class="strong">Priority</span></th><th><span class="strong">Status in 5.0</span></th><th><span class="strong">Description</span></th></tr></thead><tbody><tr><td>10.0</td><td>A</td><td>?</td><td><span class="strong">Seamless
+              Viewing</span>. The gatekeeper should provide seamless viewing of URLs.  This means
+              that the URLs should look like they belong to the ACS site, not the
+              original site.</td></tr></tbody></table></div><p>Does this refer to web pages or to URL?  Ie, does this mean that "user can click on a link and see (password-protected) web pages from a remote site, within the OpenACS site's look and feel," or does it mean, "user can click URLs that look like http://myopenacssite.test/foo/bar"?</p><div class="informaltable"><table cellspacing="0" border="1"><colgroup><col><col><col><col></colgroup><tbody><tr><td>20.0</td><td>A</td><td>?</td><td><span class="strong">Restricted Browsing</span>. 
+A given instance of the gatekeeper package should only provide access
     to a single site.  The user must not be able to modify the URL so that
     arbitrary sites can be retrieved through the server.
-    </p>
-
-    <p><strong>30.0 Link Translation</strong>
-    </p>
-    <p>
-    All links from the gatekeeper page to the given site should be
+</td></tr></tbody></table></div><div class="informaltable"><table cellspacing="0" border="1"><colgroup><col><col><col><col></colgroup><tbody><tr><td>30.0</td><td>A</td><td>?</td><td><span class="strong">Link Translation</span>. 
+ All links from the gatekeeper page to the given site should be
     translated to use the gatekeeper.
-    </p>
-
-    <p><strong>40.0 User Tracking</strong>
-    </p>
-    <p>
-    The ability to track all pages viewed via the gatekeeper should exist.
-    </p>
-
-    <p><strong>50.0 Flexible Restrictions</strong>
-    </p>
-    <blockquote>
-    <p><strong>50.1 ACS Permissions</strong>
-    </p>
-    <p>
+</td></tr></tbody></table></div><div class="informaltable"><table cellspacing="0" border="1"><colgroup><col><col><col><col></colgroup><tbody><tr><td>40.0</td><td>A</td><td>?</td><td><span class="strong">User Tracking</span>. 
+The ability to track all pages viewed via the gatekeeper should exist.</td></tr></tbody></table></div><p><span class="strong">50.0 Flexible Restrictions</span>
+    </p><div class="blockquote"><blockquote class="blockquote"><p><span class="strong">50.1 ACS Permissions</span>
+    </p><p>
     The gatekeeper package should support standard ACS permissioning.  Access can thus
     be limited by setting up limited read access to an instance of the gatekeeper package.
-    </p>
-    <p><strong>50.2 Callbacks </strong>
-    </p>
-    <p>
+    </p><p><span class="strong">50.2 Callbacks </span>
+    </p><p>
     The gatekeepers should be provide access control via registered callbacks.
-    </p>
-    </blockquote>
-
-    <p><strong>60.0 Full HTTP Support</strong>
-    </p>
-    <p>
+    </p></blockquote></div><p><span class="strong">60.0 Full HTTP Support</span>
+    </p><p>
     The gatekeeper should support the entire HTTP specification.
-    <blockquote>
-        <p><strong>60.1 POST Support</strong>
-        </p>
-        <p>
+    </p><div class="blockquote"><blockquote class="blockquote"><p><span class="strong">60.1 POST Support</span>
+        </p><p>
         POST form submission must be supported.
-        </p>
-        <p><strong>60.2 Non-HTML Pages</strong>
-        </p>
-        <p>
+        </p><p><span class="strong">60.2 Non-HTML Pages</span>
+        </p><p>
         Retrieval of non-HTML pages, such as GIFs and JPEGs, must be supported.
-        </p>
-        <p><strong>60.3 Cookie Support</strong>
-        </p>
-        <p>
+        </p><p><span class="strong">60.3 Cookie Support</span>
+        </p><p>
         The system should have the ability to store and respond with cookies sent
         from the guarded site.
-        </p>
-    </blockquote>
-    </p>
-
-
-    <h3>VII. Revision History</h3>
-    
-<table cellpadding=2 cellspacing=2 width=90% bgcolor=#efefef>
-<tr bgcolor=#e0e0e0>
-    <th width=10%>Document Revision #</th>
-    <th width=50%>Action Taken, Notes</th>
-    <th>When?</th>
-    <th>By Whom?</th>
-</tr>
-
-<tr>
-   <td>0.1</td>
-   <td>Creation</td>
-   <td>11/23/2000</td>
-   <td>Joseph Bank</td>
-</tr>
-</table>
-
-    <hr>
-    <address><a href="mailto:jbank@arsdigita.com"></a></address>
-Last modified: $Id$
-  </body>
-</html>
+        </p></blockquote></div><p>
+    </p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="gatekeeper-revisions-history"></a>Revision History</h3></div></div><div></div></div><div class="informaltable"><table cellspacing="0" border="1"><colgroup><col><col><col><col></colgroup><thead><tr><th><span class="strong">Document Revision #</span></th><th><span class="strong">Action Taken, Notes</span></th><th><span class="strong">When?</span></th><th><span class="strong">By Whom?</span></th></tr></thead><tbody><tr><td>1</td><td>Creation</td><td>23 Nov 2000</td><td>Joseph Bank</td></tr><tr><td>2</td><td>Revised to add Nima Mazloumi's use case.</td><td>13 Jan 2004</td><td>Joel Aufrecht</td></tr></tbody></table></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="gatekeeper-install.html">Prev</a> </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right"> </td></tr><tr><td width="40%" align="left">Installation </td><td width="20%" align="center"><a accesskey="u" href="index.html">Up</a></td><td width="40%" align="right"> </td></tr></table><hr><address><a href="mailto:docs@openacs.org">docs@openacs.org</a></address></div><a name="comments"></a><center><a href="http://openacs.org/doc/requirements.html#comments">View comments on this page at openacs.org</a></center></body></html>

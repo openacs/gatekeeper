@@ -1,0 +1,33 @@
+<?xml version='1.0' ?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+]>
+
+  <sect1 id="gatekeeper-install">
+    <title>Installation</title>
+
+    <authorblurb>
+      <para>
+      by <ulink url="mailto:joel@aufrecht.org">Joel Aufrecht</ulink>
+      </para>
+    </authorblurb>
+    <para>Gatekeeper redirects OpenACS site requests to a remote URL.  Each instance of gatekeeper works for a single URL.  To install:</para>
+    <orderedlist>
+      <listitem>
+        <para>Go to <computeroutput>http://<replaceable>yourserver.test</replaceable><ulink url="/admin/applications">/admin/applications</ulink></computeroutput></para>
+      </listitem>
+      <listitem>
+        <para>Click "Add Application"</para>
+      </listitem>
+      <listitem>
+        <para>Choose "GateKeeper" and optionally fill out the other fields, and click OK.  If gatekeeper doesn't appear on the list, go to <computeroutput>http://<replaceable>yourserver.test</replaceable><ulink url="/acs-admin/install">/acs-admin/install</ulink></computeroutput> to install it and then resume this process</para>
+      </listitem>
+      <listitem>
+        <para>You should now see an "Applications" page with a list of applications including your new gatekeeper.  Click <computeroutput>Parameters</computeroutput> for your new package.</para>
+      </listitem>
+      <listitem>
+        <para>Enter the remote URL as <computeroutput>GuardUrl</computeroutput>.</para>
+      </listitem>
+    </orderedlist>
+
+</sect1>
