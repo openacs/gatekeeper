@@ -3,7 +3,7 @@ ad_library {
      Procs used by the gatekeeper module.
      @author jbank@arsdigita.com [jbank@arsdigita.com]
      @creation-date Wed Dec  6 11:19:49 2000
-     @cvs-id
+     @cvs-id $Id$
 }
 
 #TODO: 
