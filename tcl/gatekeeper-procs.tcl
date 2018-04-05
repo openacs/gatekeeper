@@ -323,6 +323,6 @@ ad_proc -public gatekeeper_serve_request { } {
     if { [catch { gatekeeper_query_foreign [gatekeeper_request_url_to_foreign_url $url]}] } {
 	global errorInfo
 	ns_log Error "gatekeeper_serve_request: error fetching $url:\n$errorInfo"
-	ad_return_error "Unable to retreive page." "Unable to retreive page."
+	ad_return_error "Unable to retrieve page." "Unable to retrieve page."
     }
 }
