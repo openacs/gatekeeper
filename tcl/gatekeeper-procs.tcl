@@ -150,7 +150,7 @@ ad_proc -private gatekeeper_munge_cookies {cookie} {
     before sending it to the foreign server.
 } {
     set cookies [split $cookie ";"]
-    set return_cookies [list]
+    set return_cookies {}
     foreach cookie $cookies {
         set cv [split $cookie "="]
         set key [lindex $cv 0]
@@ -221,7 +221,7 @@ ad_proc -private gatekeeper_query_foreign {url {timeout 30}} {
 
     if { [ns_conn method] == "POST" } {
         set rqset [ns_getform]
-        set formvars [list]
+        set formvars {}
         for {set i 0} {$i < [ns_set size $rqset]} {incr i} {
             lappend formvars "[ns_urlencode [ns_set key $rqset $i]]=[ns_urlencode [ns_set value $rqset $i]]"
         }
